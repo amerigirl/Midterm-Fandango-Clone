@@ -30,10 +30,14 @@ api.add_resource(MovieListResource, '/api/movies')
 def hello():
     return "Hello, Flask!"
 
-@app.route('/movies')
-def get_movies():
-    return "List of movies"
+@app.route('/movies', methods=['GET'])
+def movies():
+    return 
 
+@app.route('/movies', methods=['POST'])
+def add_movie():
+    # Logic to add a movie
+    return "Movie added"
 
 
 if __name__ == '__main__':
