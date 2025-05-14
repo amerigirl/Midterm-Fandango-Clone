@@ -1,11 +1,10 @@
-#Welcome to top of the rim movies
+from flask import Flask
 
-def _print_welcome():
-    print("Welcome to Top of the Rim Movies" )
-    print("The place for all the BEST film has to offer!")
+app = Flask(__name__)
 
+@app.route('/')
+def hello():
+    return "Hello, Flask!"
 
-
-if __name__ == "__main__":
-    _print_welcome()
-
+if __name__ == '__main__':
+    app.run(debug=True)
