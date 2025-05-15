@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Resource, Api, reqparse, fields, marshal_with 
 from flask_migrate import Migrate
 from movieModel import db
-from resources import MovieListResource
+from resources import MovieListResource, MovieResource
 
 app = Flask(__name__)
 
@@ -25,6 +25,7 @@ with app.app_context():
     db.create_all()
 
 api.add_resource(MovieListResource, '/api/movies') 
+api.add_resource(MovieResource, '/api/movie/<int:id>')
 
 @app.route('/')
 def hello():
@@ -38,6 +39,7 @@ def movies():
 def add_movie():
     # Logic to add a movie
     return "Movie added"
+
 
 
 if __name__ == '__main__':

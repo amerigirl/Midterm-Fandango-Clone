@@ -23,6 +23,7 @@ class MovieListResource(Resource):
         #get all movies
         return Movie.query.all()
     
+    
     @marshal_with(movie_fields)
     def post(self):
         params = movie_params.parse_args()
@@ -36,3 +37,15 @@ class MovieListResource(Resource):
         db.session.add(new_movie)
         db.session.commit()
         return new_movie, 201
+
+#I kept getting an error when I tried to use the same class name as the one in the movieModel.py file
+# so I just changed it to MovieResource
+class MovieResource(Resource):
+    @marshal_with(movie_fields)
+    def get(self, id):
+        #get a single movie
+        movie = Movie.query.filter_by(id=id).first()
+        if movie is None:
+            return {'message': 'Movie not found'}, 404
+        return movie
+    
