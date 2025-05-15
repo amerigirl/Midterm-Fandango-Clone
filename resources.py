@@ -12,11 +12,11 @@ movie_fields = {
     'release_date': fields.Integer
 }
 
-movie_args = reqparse.RequestParser()
-movie_args.add_argument('title', type=str, help='Title of the movie is required', required=True) 
-movie_args.add_argument('description', type=str, help='Description of the movie is required', required=True)
-movie_args.add_argument('rating', type=float, help='Rating of the movie is required', required=True)        
-
+movie_params = reqparse.RequestParser()
+movie_params.add_argument('title', type=str, help='Title of the movie is required', required=True) 
+movie_params.add_argument('description', type=str, help='Description of the movie is required', required=True)
+movie_params.add_argument('rating', type=float, help='Rating of the movie is required', required=True)        
+movie_params.add_argument('release_date', type=int, help='Release date of the movie is required', required=True)
 class MovieListResource(Resource):
     @marshal_with(movie_fields)
     def get(self):
@@ -25,14 +25,14 @@ class MovieListResource(Resource):
     
     @marshal_with(movie_fields)
     def post(self):
-        args = movie_args.parse_args()
+        params = movie_params.parse_args()
         new_movie = Movie(
-            title=args['title'],
-            description=args['description'],
-            rating=args['rating'],
-            release_date=args['release_date']
+            title=params.get('title'),
+            description=params.get('description'),
+            rating=params.get('rating'),
+            release_date=params.get('release_date')
         )
         # Add the new movie to the session and commit
         db.session.add(new_movie)
         db.session.commit()
-        return new_movie.query.all()
+        return new_movie, 201
